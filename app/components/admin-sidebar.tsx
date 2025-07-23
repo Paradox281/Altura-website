@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
@@ -11,6 +11,7 @@ import {
   Star,
   Percent,
   Building2,
+  LogOut,
 } from "lucide-react"
 
 const sidebarItems = [
@@ -53,6 +54,14 @@ const sidebarItems = [
 
 export function AdminSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
+
+  const handleLogout = () => {
+    // Hapus semua data dari localStorage
+    localStorage.clear()
+    // Redirect ke halaman login
+    router.push('/login')
+  }
 
   return (
     <div className="flex h-screen w-64 flex-col border-r bg-background">
@@ -79,6 +88,15 @@ export function AdminSidebar() {
           )
         })}
       </nav>
+      <div className="border-t p-4">
+        <button
+          onClick={handleLogout}
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+        >
+          <LogOut className="h-4 w-4" />
+          Logout
+        </button>
+      </div>
     </div>
   )
 } 

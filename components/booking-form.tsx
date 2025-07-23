@@ -55,7 +55,7 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
               <div className="text-center">
                 <p>Silakan scan barcode berikut di aplikasi Expo Go:</p>
                 <div className="flex justify-center items-center">
-                  <QRCodeCanvas value="exp://192.168.10.205:8081" size={200} />
+                  <QRCodeCanvas value="exp://192.168.1.6:8081" size={200} />
                 </div>
                 <p className="text-sm mt-2 text-gray-600">
                   atau klik link berikut untuk membuka langsung:

@@ -218,11 +218,10 @@ yang menunjukkan esensi sejati setiap destinasi.
       <section className="py-16 px-4 bg-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6" data-aos="fade-up">
-            Ready to Start Your Adventure?
+          Siap Memulai Petualangan Anda?
           </h2>
           <p className="text-xl text-gray-600 mb-8" data-aos="fade-up" data-aos-delay="100">
-            Join thousands of travelers who have discovered the world with Altura. Let us help you create memories that
-            will last a lifetime.
+          Bergabunglah dengan ribuan Traveller yang telah menjelajahi dunia bersama Altura. Biarkan kami membantu Anda menciptakan kenangan yang akan bertahan seumur hidup.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4" data-aos="fade-up" data-aos-delay="200">
             <Button asChild size="lg">

@@ -230,13 +230,13 @@ export default function TestimonialsPage() {
                     <TableCell className="max-w-md truncate">{testimonial.testimonial}</TableCell>
                     <TableCell>{formatDate(testimonial.created_at)}</TableCell>
                     <TableCell className="text-right">
-                      <Button
+                      {/* <Button
                         variant="ghost"
                         size="icon"
                         onClick={() => handleEdit(testimonial)}
                       >
                         <Pencil className="h-4 w-4" />
-                      </Button>
+                      </Button> */}
                       <Button
                         variant="ghost"
                         size="icon"

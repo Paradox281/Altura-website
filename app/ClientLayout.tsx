@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { usePathname } from "next/navigation"
 import { Inter } from "next/font/google"
 import Link from "next/link"
 import { Mountain, Phone, Mail, MapPin, Facebook, Instagram, Twitter } from "lucide-react"
@@ -14,6 +15,17 @@ export function ClientLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const pathname = usePathname()
+  const isPrintPage = pathname.includes("/print")
+
+  if (isPrintPage) {
+    return (
+      <html lang="en">
+        <body className={inter.className}>{children}</body>
+      </html>
+    )
+  }
+
   return (
     <html lang="en">
       <head>
@@ -46,7 +58,6 @@ export function ClientLayout({
                       Contact
                     </Link>
                   </nav>
-                  <div className="md:hidden">{/* Mobile menu button would go here */}</div>
                 </div>
               </div>
             </header>

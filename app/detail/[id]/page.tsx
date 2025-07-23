@@ -216,9 +216,9 @@ export default async function DestinationDetailPage({ params }: PageProps) {
       {/* Call to Action */}
       <section className="bg-blue-600 text-white py-16">
         <div className="max-w-4xl mx-auto text-center px-4">
-          <h2 className="text-3xl font-bold mb-4">Ready to Book This Adventure?</h2>
+          <h2 className="text-3xl font-bold mb-4">Siap Bertualang?</h2>
           <p className="text-xl mb-8 text-blue-100">
-            Join {destination.jumlahBooking} other travelers who have experienced this amazing destination.
+            Bergabung dengan {destination.jumlahBooking} wisatawan lain yang telah merasakan destinasi menakjubkan ini.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button

@@ -151,7 +151,6 @@ export default function UsersPage() {
                   <TableHead>Nama</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead>Total Booking</TableHead>
-                  <TableHead>Total Pengeluaran</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -163,12 +162,6 @@ export default function UsersPage() {
                       <div className="flex items-center gap-2">
                         <Calendar className="h-4 w-4" />
                         {user.totalBookings}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <CreditCard className="h-4 w-4" />
-                        {formatCurrency(user.totalSpent)}
                       </div>
                     </TableCell>
                   </TableRow>
