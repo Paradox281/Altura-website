@@ -128,7 +128,7 @@ export default function DestinationsPage() {
       .catch((error) => console.error("Error fetching regencies:", error));
   }, []);
 
-  const handleInputChanges = (e) => {
+  const handleInputChanges = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, location: e.target.value });
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
