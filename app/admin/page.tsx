@@ -53,7 +53,7 @@ export default function AdminDashboard() {
           throw new Error("Token tidak ditemukan");
         }
 
-        const response = await fetch("http://localhost:8080/api/admin/dashboard", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/dashboard`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

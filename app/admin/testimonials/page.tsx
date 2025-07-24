@@ -69,7 +69,7 @@ export default function TestimonialsPage() {
         throw new Error("Token tidak ditemukan");
       }
 
-      const response = await fetch("http://localhost:8080/api/admin/testimonial", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/testimonial`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -107,8 +107,8 @@ export default function TestimonialsPage() {
       }
 
       const url = isEditMode && selectedTestimonial
-        ? `http://localhost:8080/api/admin/testimonial/${selectedTestimonial.id}`
-        : "http://localhost:8080/api/admin/testimonial";
+        ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/testimonial/${selectedTestimonial.id}`
+        : `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/testimonial`;
 
       const response = await fetch(url, {
         method: isEditMode ? "PUT" : "POST",
@@ -142,7 +142,7 @@ export default function TestimonialsPage() {
         throw new Error("Token tidak ditemukan");
       }
 
-      const response = await fetch(`http://localhost:8080/api/testimonials/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/testimonials/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

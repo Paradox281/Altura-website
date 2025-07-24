@@ -57,7 +57,7 @@ export default function FacilitiesPage() {
         throw new Error("Token tidak ditemukan");
       }
 
-      const response = await fetch("http://localhost:8080/api/admin/facilitas", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/facilitas`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -85,8 +85,8 @@ export default function FacilitiesPage() {
       }
 
       const url = isEditMode && selectedFacility
-        ? `http://localhost:8080/api/admin/facility/${selectedFacility.id}`
-        : "http://localhost:8080/api/admin/facility";
+        ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/facility/${selectedFacility.id}`
+        : `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/facility`;
 
       const response = await fetch(url, {
         method: isEditMode ? "PUT" : "POST",
@@ -122,7 +122,7 @@ export default function FacilitiesPage() {
         throw new Error("Token tidak ditemukan");
       }
 
-      const response = await fetch(`http://localhost:8080/api/admin/facility/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/facility/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

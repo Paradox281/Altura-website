@@ -54,7 +54,7 @@ export default function BookingsPage() {
         throw new Error("Token tidak ditemukan");
       }
 
-      const response = await fetch("http://localhost:8080/api/admin/booking", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/booking`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -81,7 +81,7 @@ export default function BookingsPage() {
         throw new Error("Token tidak ditemukan");
       }
 
-      const response = await fetch(`http://localhost:8080/api/admin/booking/${id}/status?status=${newStatus}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/booking/${id}/status?status=${newStatus}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -47,7 +47,7 @@ export default function PrintBookingPage() {
         throw new Error("Token tidak ditemukan");
       }
 
-      const response = await fetch(`http://localhost:8080/api/admin/bookings/${bookingId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/bookings/${bookingId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

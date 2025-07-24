@@ -106,7 +106,7 @@ export default function DestinationDetailPage({ params }: { params: { id: string
         throw new Error("Token tidak ditemukan");
       }
 
-      const response = await fetch(`http://localhost:8080/api/admin/manage/${params.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/manage/${params.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -137,7 +137,7 @@ export default function DestinationDetailPage({ params }: { params: { id: string
           throw new Error("Token tidak ditemukan");
         }
 
-        const response = await fetch("http://localhost:8080/api/admin/facilitas", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/facilitas`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -182,7 +182,7 @@ export default function DestinationDetailPage({ params }: { params: { id: string
         throw new Error("Token tidak ditemukan");
       }
 
-      const response = await fetch("http://localhost:8080/api/admin/promo", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/promo`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -216,7 +216,7 @@ export default function DestinationDetailPage({ params }: { params: { id: string
         throw new Error("Token tidak ditemukan");
       }
 
-      const response = await fetch("http://localhost:8080/api/facility-destinations", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/facility-destinations`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -257,7 +257,7 @@ export default function DestinationDetailPage({ params }: { params: { id: string
       formData.append("file", selectedImage);
       formData.append("destinationId", params.id);
 
-      const response = await fetch("http://localhost:8080/api/gallery/upload", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/gallery/upload`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
