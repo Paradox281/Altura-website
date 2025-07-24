@@ -74,6 +74,11 @@ interface DestinationFormData {
   itinerary: string;
 }
 
+interface Regency {
+  id: number;
+  name: string;
+}
+
 export default function DestinationsPage() {
   const [destinations, setDestinations] = useState<Destination[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -90,7 +95,7 @@ export default function DestinationsPage() {
     itinerary: "",
   });
   const router = useRouter();
-  const [regencies, setRegencies] = useState([]);
+  const [regencies, setRegencies] = useState<Regency[]>([]);
   const fetchDestinations = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -137,6 +142,10 @@ export default function DestinationsPage() {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFormData({ ...formData, location: e.target.value });
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -302,12 +311,12 @@ export default function DestinationsPage() {
                       id="location"
                       name="location"
                       value={formData.location}
-                      onChange={handleInputChanges}
+                      onChange={handleSelectChange}
                       required
                       className="w-full border rounded p-2"
                     >
                       <option value="">Pilih Kabupaten/Kota</option>
-                      {regencies.map((regency) => (
+                      {regencies.map((regency: Regency) => (
                         <option key={regency.id} value={regency.name}>
                           {regency.name}
                         </option>
