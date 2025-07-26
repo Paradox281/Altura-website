@@ -44,6 +44,9 @@ export interface DestinationDetail {
   galleries: string[];
   highlights?: string[];
   groupSize?: string;
+  hargaDiskon?: number | null; // tambahkan ini
+  persentaseDiskon?: number | null; // jika perlu
+  promoId?: number | null; // jika perlu
 }
 
 export interface Facility {
