@@ -50,7 +50,7 @@ export default function PromosPage() {
           throw new Error("Token tidak ditemukan");
         }
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/promo`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/promo`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

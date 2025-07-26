@@ -103,7 +103,7 @@ export default function DestinationsPage() {
         throw new Error("Token tidak ditemukan");
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/destination`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/destination`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -173,8 +173,8 @@ export default function DestinationsPage() {
       });
 
       const url = isEditMode && selectedDestination
-        ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/destinations/${selectedDestination.id}`
-        : `${process.env.NEXT_PUBLIC_BASE_URL}/api/destinations`;
+        ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/destinations/${selectedDestination.id}`
+        : `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/destinations`;
 
       const response = await fetch(url, {
         method: isEditMode ? "PUT" : "POST",
@@ -207,7 +207,7 @@ export default function DestinationsPage() {
         throw new Error("Token tidak ditemukan");
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/destinations/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/destinations/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
