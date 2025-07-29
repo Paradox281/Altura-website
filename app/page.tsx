@@ -429,9 +429,8 @@ export default function Home() {
                                       <span className="text-gray-400 line-through text-sm">
                                         Rp {destination.price.toLocaleString()}
                                       </span>
-                                      <span className="text-red-600 font-bold text-lg">
-                                        Rp {destination.hargaDiskon.toLocaleString()}
-                                      </span>
+                                        <span className="text-red-600 font-bold text-lg">
+                                        Rp {(destination.price - destination.hargaDiskon).toLocaleString()}                                        </span>
                                     </>
                                   ) : (
                                     <span className="text-blue-600 font-bold text-lg">

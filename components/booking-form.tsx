@@ -14,10 +14,7 @@ import {
   Dialog, DialogTrigger, DialogContent,
   DialogHeader, DialogTitle, DialogDescription
 } from "@/components/ui/dialog"
-import {
-  Tabs, TabsList, TabsTrigger, TabsContent
-} from "@/components/ui/tabs"
-import { QRCodeCanvas } from "qrcode.react"
+import { useToast } from "@/hooks/use-toast"
 interface BookingFormProps {
   destinationId: number
   price: number
@@ -27,61 +24,54 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
   const [guests, setGuests] = useState(1)
   const [selectedDate, setSelectedDate] = useState("")
   const totalPrice = price * guests
+  const { toast } = useToast()
+
+  const handleDownload = async () => {
+    try {
+      const response = await fetch("https://altura.up.railway.app/api/apk/download")
+      if (!response.ok) throw new Error("Gagal mengunduh APK")
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = "Altura.apk"
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      window.URL.revokeObjectURL(url)
+      toast({
+        title: "Berhasil",
+        description: "APK berhasil diunduh.",
+      })
+    } catch (err) {
+      toast({
+        title: "Gagal",
+        description: "Terjadi kesalahan saat mengunduh APK.",
+      })
+    }
+  }
 
   return (
     <div className="space-y-4">
       <Dialog>
         <DialogTrigger asChild>
           <Button className="w-full bg-blue-600 hover:bg-blue-700">
-            Book Now
+            Pesan Sekarang
           </Button>
         </DialogTrigger>
 
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>Booking Details</DialogTitle>
+            <DialogTitle>Download Aplikasi Altura</DialogTitle>
             <DialogDescription>
-              Pilih metode pemesanan atau pelajari cara menggunakan aplikasi.
+              Klik tombol di bawah untuk mengunduh file APK aplikasi Altura.
             </DialogDescription>
           </DialogHeader>
-
-          <Tabs defaultValue="scan" className="mt-4">
-            <TabsList className="grid grid-cols-2">
-              <TabsTrigger value="scan">Scan & Deep Link</TabsTrigger>
-              <TabsTrigger value="tutorial">Tutorial Expo</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="scan" className="mt-4 space-y-4">
-              <div className="text-center">
-                <p>Silakan scan barcode berikut di aplikasi Expo Go:</p>
-                <div className="flex justify-center items-center">
-                  <QRCodeCanvas value="exp://192.168.1.6:8081" size={200} />
-                </div>
-                <p className="text-sm mt-2 text-gray-600">
-                  atau klik link berikut untuk membuka langsung:
-                </p>
-                <a
-                  href="exp://example.com"
-                  className="text-blue-500 underline"
-                  target="_blank"
-                >
-                  Buka dengan Expo
-                </a>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="tutorial" className="mt-4 space-y-2">
-            <div className="flex justify-center">
-              <img src="https://i.pinimg.com/originals/e4/af/9f/e4af9f0025a8ce68bee2cf5a1360a501.gif" className="w-[200px] h-[200px]" />
-            </div>
-              <ol className="list-decimal list-inside space-y-1 text-sm text-gray-700 mt-2">
-                <li>Install aplikasi Expo Go dari Play Store / App Store</li>
-                <li>Buka aplikasi dan pilih opsi "Scan QR Code"</li>
-                <li>Scan barcode di tab pertama</li>
-                <li>Aplikasi akan terbuka otomatis di perangkat Anda</li>
-              </ol>
-            </TabsContent>
-          </Tabs>
+          <div className="flex flex-col items-center gap-4 mt-6">
+            <Button onClick={handleDownload} className="bg-green-600 hover:bg-green-700 w-full">
+              Download APK
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
 
