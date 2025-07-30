@@ -260,9 +260,7 @@ export default function BookingsPage() {
                           ? formatCurrency(booking.total_price)
                           : (
                             <>
-                              <div>Harga Asli: {formatCurrency(booking.harga_asli)}</div>
-                              <div>Diskon: -{formatCurrency(booking.harga_asli - booking.total_price)}</div>
-                              <div>Total: {formatCurrency(booking.total_price)}</div>
+                              <div>{formatCurrency(booking.harga_asli - booking.total_price)}</div>
                             </>
                           )}
                       </TableCell>
