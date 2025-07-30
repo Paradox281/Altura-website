@@ -36,12 +36,14 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
     setDownloadStatus('downloading')
     setDownloadProgress(0)
 
+    let progressInterval: NodeJS.Timeout | null = null
+
     try {
       // Simulasi progress download
-      const progressInterval = setInterval(() => {
+      progressInterval = setInterval(() => {
         setDownloadProgress(prev => {
           if (prev >= 90) {
-            clearInterval(progressInterval)
+            if (progressInterval) clearInterval(progressInterval)
             return 90
           }
           return prev + Math.random() * 15
@@ -54,7 +56,7 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
       const blob = await response.blob()
       
       // Selesaikan progress ke 100%
-      clearInterval(progressInterval)
+      if (progressInterval) clearInterval(progressInterval)
       setDownloadProgress(100)
       
       // Simulasi delay untuk menampilkan progress 100%
@@ -83,7 +85,7 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
       }, 500)
       
     } catch (err) {
-      clearInterval(progressInterval)
+      if (progressInterval) clearInterval(progressInterval)
       setDownloadStatus('error')
       toast({
         title: "Gagal",
