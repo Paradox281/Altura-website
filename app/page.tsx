@@ -182,9 +182,9 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative w-full max-w-6xl mx-auto px-4 mb-8"
+          className="relative w-full max-w-7xl mx-auto px-4 mb-8"
         >
-          <div className="relative h-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl">
+          <div className="relative h-24 md:h-[300px] lg:h-[350px] xl:h-[400px] rounded-2xl overflow-hidden shadow-2xl">
             {bannerSlides.map((slide, index) => (
               <div
                 key={index}
@@ -196,17 +196,31 @@ export default function Home() {
                       : "opacity-0 scale-95 translate-x-full"
                 }`}
               >
-                <img src={slide.image || "/placeholder.svg"} alt={slide.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} className="object-cover" />
+                <img 
+                  src={slide.image || "/placeholder.svg"} 
+                  alt={slide.title} 
+                  style={{ 
+                    position: 'absolute', 
+                    top: 0, 
+                    left: 0, 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'cover',
+                    objectPosition: 'center'
+                  }} 
+                  className="object-cover"
+                  loading="eager"
+                />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
                 <div className="absolute inset-0 flex items-center">
-                  <div className="text-left text-white px-8 md:px-12 max-w-2xl">
+                  <div className="text-left text-white px-8 md:px-12 lg:px-16 max-w-2xl">
                     <motion.div
                       initial={{ opacity: 0, x: -50 }}
                       animate={{ opacity: index === currentSlide ? 1 : 0, x: index === currentSlide ? 0 : -50 }}
                       transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                      <h3 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">{slide.title}</h3>
-                      <p className="text-lg md:text-xl mb-6 text-blue-100">{slide.subtitle}</p>
+                      <h3 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">{slide.title}</h3>
+                      <p className="text-lg md:text-xl lg:text-2xl mb-6 text-blue-100 leading-relaxed">{slide.subtitle}</p>
                      
                     </motion.div>
                   </div>
@@ -270,7 +284,7 @@ export default function Home() {
               🔥 Penawaran Khusus & Promosi
             </h2>
             <p className="text-xl text-gray-600" data-aos="fade-up" data-aos-delay="100">
-            Penawaran waktu terbatas di destinasi terpopuler kami
+           Dapatkan promo khusus hingga 20% jika pesan sekarang di aplikasi android kami
             </p>
           </div>
 
@@ -368,7 +382,6 @@ export default function Home() {
           </div>
 
           <div className="text-center mt-12" data-aos="fade-up">
-            <p className="text-gray-600 mb-4">* Penawaran berlaku hingga persediaan habis. Syarat dan ketentuan berlaku.</p>
             <Button asChild variant="outline" size="lg">
               <Link href="/destinations">Lihat Semua Promosi
               </Link>
@@ -590,23 +603,23 @@ export default function Home() {
 // Enhanced banner slides data
 const bannerSlides = [
   {
-    title: "Lembah Harau",
-    subtitle: "Diskon hingga 50% di destinasi tertentu • Penawaran waktu terbatas",
-    image: "/LEMBAH-HARAU-Destinasi-tour-wisata-Sumbar-favorit-disekitar-Payakumbuh-50-Kota-Sumatera-Barat.jpg",
+    title: "Liburan seru",
+    subtitle: "Diskon hingga 20% pesan langsung di aplikasi sekarang",
+    image: "/Biru Putih Modern Paket Tour Flyer (1).png",
     
     
   },
   {
-    title: "Kapalo Banda",
+    title: "Promo seruu",
     subtitle: "Pengalaman terbaik bagi keluarga",
-    image: "/143098.jpg",
+    image: "/Capture.PNG",
     
     
   },
   {
-    title: "Batang Agam",
+    title: "Akomodasi terbaik",
     subtitle: "Tempat-tempat keren menanti anda",
-    image: "/images (3).jpeg",
+    image: "/Biru Putih Modern Kolase Promosi Paket Liburan Banner-min.png",
   
     
   },

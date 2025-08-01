@@ -89,7 +89,7 @@ export default async function DestinationDetailPage({ params }: PageProps) {
             {/* Description */}
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-4">About This Destination</h2>
+                <h2 className="text-2xl font-bold mb-4">Destinasi Ini</h2>
                 <p className="text-gray-600 mb-4 leading-relaxed">{destination.description}</p>
                 {destination.longDescription && (
                   <p className="text-gray-600 leading-relaxed">{destination.longDescription}</p>
@@ -171,10 +171,24 @@ export default async function DestinationDetailPage({ params }: PageProps) {
             <Card className="sticky top-24">
               <CardContent className="p-6">
                 <div className="text-center mb-6">
-                <div className="text-3xl font-bold text-blue-600 mb-2">
-                Rp {(destination.harga - (destination.hargaDiskon || 0)).toLocaleString()}
-                </div>
-                  <p className="text-gray-600">per person</p>
+                  {destination.hargaDiskon && destination.hargaDiskon > 0 ? (
+                    <>
+                      <div className="text-3xl font-bold text-blue-600 mb-2">
+                        Rp {(destination.harga - destination.hargaDiskon).toLocaleString()}
+                      </div>
+                      <div className="text-lg text-gray-500 line-through mb-1">
+                        Rp {destination.harga.toLocaleString()}
+                      </div>
+                      <div className="text-sm text-green-600 font-semibold mb-2">
+                        Hemat Rp {destination.hargaDiskon.toLocaleString()}!
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-3xl font-bold text-blue-600 mb-2">
+                      Rp {destination.harga.toLocaleString()}
+                    </div>
+                  )}
+                  <p className="text-gray-600">Pesan di aplikasi android dan dapatkan promo dengan Klik tombol pesan sekarang  </p>
                 </div>
 
                 <Separator className="my-6" />
