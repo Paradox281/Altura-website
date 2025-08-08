@@ -85,10 +85,10 @@ export default function AdminDashboard() {
   };
 
   const bookingStatusData = dashboardData
-    ? Object.entries(dashboardData.bookingStatus).map(([name, value]) => ({
-        name,
-        value,
-        color: name === "Confirmed" ? "#22c55e" : name === "PENDING" ? "#f59e0b" : "#ef4444",
+    ? (["Confirmed", "Cancelled", "PENDING"] as const).map((status) => ({
+        name: status,
+        value: dashboardData.bookingStatus[status] || 0,
+        color: status === "Confirmed" ? "#22c55e" : status === "PENDING" ? "#f59e0b" : "#ef4444",
       }))
     : [];
 
@@ -189,17 +189,17 @@ export default function AdminDashboard() {
             <CardContent>
               <ChartContainer
                 config={{
-                  confirmed: {
+                  Confirmed: {
                     label: "Confirmed",
                     color: "#22c55e",
+                  },
+                  Cancelled: {
+                    label: "Cancelled",
+                    color: "#ef4444",
                   },
                   PENDING: {
                     label: "PENDING",
                     color: "#f59e0b",
-                  },
-                  cancelled: {
-                    label: "Cancelled",
-                    color: "#ef4444",
                   },
                 }}
                 className="h-[300px]"
