@@ -30,7 +30,7 @@ interface DashboardData {
   bookingStatus: {
     Confirmed: number;
     Cancelled: number;
-    Pending: number;
+    PENDING: number;
   };
 }
 
@@ -88,7 +88,7 @@ export default function AdminDashboard() {
     ? Object.entries(dashboardData.bookingStatus).map(([name, value]) => ({
         name,
         value,
-        color: name === "Confirmed" ? "#22c55e" : name === "Pending" ? "#f59e0b" : "#ef4444",
+        color: name === "Confirmed" ? "#22c55e" : name === "PENDING" ? "#f59e0b" : "#ef4444",
       }))
     : [];
 
@@ -132,7 +132,7 @@ export default function AdminDashboard() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Bookings</CardTitle>
+              <CardTitle className="text-sm font-medium">Total Bookings Confirmed</CardTitle>
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -193,8 +193,8 @@ export default function AdminDashboard() {
                     label: "Confirmed",
                     color: "#22c55e",
                   },
-                  pending: {
-                    label: "Pending",
+                  PENDING: {
+                    label: "PENDING",
                     color: "#f59e0b",
                   },
                   cancelled: {
