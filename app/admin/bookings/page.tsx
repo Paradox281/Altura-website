@@ -32,12 +32,14 @@ interface Booking {
 interface BookingResponse {
   data: {
     bookings: Booking[];
+    totalRevenue?: number;
   };
   status: string;
 }
 
 export default function BookingsPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [totalRevenue, setTotalRevenue] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const [startDate, setStartDate] = useState("");
@@ -67,6 +69,7 @@ export default function BookingsPage() {
       const data: BookingResponse = await response.json();
       console.log("Data booking dari API:", data.data.bookings); // Debug log
       setBookings(data.data.bookings);
+      setTotalRevenue(data.data.totalRevenue ?? 0);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Terjadi kesalahan saat mengambil data");
     } finally {
@@ -215,7 +218,7 @@ export default function BookingsPage() {
               </CardHeader>
               <CardContent>
                 <span className="text-2xl font-bold">
-                  {formatCurrency(filteredBookings.reduce((acc, b) => acc + b.total_price, 0))}
+                  {formatCurrency(totalRevenue)}
                 </span>
               </CardContent>
             </Card>
