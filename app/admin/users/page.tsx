@@ -25,6 +25,7 @@ interface User {
 interface UserResponse {
   data: {
     users: User[];
+    totalRevenue?: number;
   };
   status: string;
 }
@@ -61,7 +62,7 @@ export default function UsersPage() {
         setStats({
           totalUsers: data.data.users.length,
           totalBookings: data.data.users.reduce((acc, user) => acc + user.totalBookings, 0),
-          totalRevenue: data.data.users.reduce((acc, user) => acc + user.totalSpent, 0),
+          totalRevenue: (data.data.totalRevenue ?? data.data.users.reduce((acc, user) => acc + user.totalSpent, 0)),
         });
       } catch (error) {
         toast.error(error instanceof Error ? error.message : "Terjadi kesalahan saat mengambil data");
