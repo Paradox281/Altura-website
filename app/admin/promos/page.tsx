@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { toast } from "sonner"
-import { Calendar, Percent, Tag } from "lucide-react"
+import { Calendar, Percent, Tag, Trash2 } from "lucide-react"
 
 interface Promo {
   id: number;
@@ -93,6 +93,31 @@ export default function PromosPage() {
     });
   };
 
+  // Fungsi hapus promo
+  const handleDeletePromo = async (id: number) => {
+    if (!confirm("Yakin ingin menghapus promo ini?")) return;
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Token tidak ditemukan");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/promo/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) throw new Error("Gagal menghapus promo");
+      toast.success("Promo berhasil dihapus");
+      setPromos((prev) => prev.filter((p) => p.id !== id));
+      setStats((prev) => ({
+        ...prev,
+        totalPromos: prev.totalPromos - 1,
+        promoActive: prev.promoActive - 1 >= 0 ? prev.promoActive - 1 : 0,
+      }));
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Terjadi kesalahan saat menghapus promo");
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -151,6 +176,7 @@ export default function PromosPage() {
                   <TableHead>Persentase Diskon</TableHead>
                   <TableHead>Tanggal Mulai</TableHead>
                   <TableHead>Tanggal Berakhir</TableHead>
+                  <TableHead>Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -175,6 +201,15 @@ export default function PromosPage() {
                         <Calendar className="h-4 w-4" />
                         {formatDate(promo.tanggalBerakhir)}
                       </div>
+                    </TableCell>
+                    <TableCell>
+                      <button
+                        className="text-red-600 hover:text-red-800"
+                        title="Hapus Promo"
+                        onClick={() => handleDeletePromo(promo.id)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
                     </TableCell>
                   </TableRow>
                 ))}
