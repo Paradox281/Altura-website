@@ -252,6 +252,22 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
             >
               {getDownloadButtonContent()}
             </Button>
+            
+            {downloadStatus === 'error' && (
+              <div className="w-full space-y-2">
+                <Button 
+                  variant="outline"
+                  onClick={() => window.open("https://altura.up.railway.app/api/apk/download", "_blank")}
+                  className="w-full"
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  Download Langsung (Bypass CORS)
+                </Button>
+                <p className="text-xs text-gray-500 text-center">
+                  Tombol ini akan membuka download di tab baru untuk mengatasi masalah CORS
+                </p>
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>
