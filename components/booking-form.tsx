@@ -56,7 +56,7 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
 
       console.log('Memulai download APK...')
       
-      const response = await fetch("https://altura.up.railway.app/api/apk/download", {
+      const response = await fetch("/altura-android.apk", {
         headers: {
           'Accept': 'application/vnd.android.package-archive, application/octet-stream, */*',
           'Cache-Control': 'no-cache'
@@ -257,14 +257,14 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
               <div className="w-full space-y-2">
                 <Button 
                   variant="outline"
-                  onClick={() => window.open("https://altura.up.railway.app/api/apk/download", "_blank")}
+                  onClick={() => window.open("/altura-android.apk", "_blank")}
                   className="w-full"
                 >
                   <Download className="mr-2 h-4 w-4" />
-                  Download Langsung (Bypass CORS)
+                  Download Langsung dari Server Lokal
                 </Button>
                 <p className="text-xs text-gray-500 text-center">
-                  Tombol ini akan membuka download di tab baru untuk mengatasi masalah CORS
+                  Tombol ini akan membuka download langsung dari file lokal
                 </p>
               </div>
             )}
