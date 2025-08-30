@@ -28,8 +28,6 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
   const [isDownloading, setIsDownloading] = useState(false)
   const [downloadProgress, setDownloadProgress] = useState(0)
   const [downloadStatus, setDownloadStatus] = useState<'idle' | 'downloading' | 'completed' | 'error'>('idle')
-  const [errorDetails, setErrorDetails] = useState("")
-  const [retryCount, setRetryCount] = useState(0)
   const totalPrice = price * guests
   const { toast } = useToast()
 
@@ -37,8 +35,6 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
     setIsDownloading(true)
     setDownloadStatus('downloading')
     setDownloadProgress(0)
-    setErrorDetails("")
-    setRetryCount(prev => prev + 1)
 
     let progressInterval: NodeJS.Timeout | null = null
 
@@ -54,91 +50,43 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
         })
       }, 200)
 
-      console.log('Memulai download APK...')
-      
-      const response = await fetch("/altura-android.apk", {
-        headers: {
-          'Accept': 'application/vnd.android.package-archive, application/octet-stream, */*',
-          'Cache-Control': 'no-cache'
-        }
-      })
-      
-      console.log('Response status:', response.status, response.statusText)
-      console.log('Response headers:', Object.fromEntries(response.headers.entries()))
-
-      if (!response.ok) {
-        const errorMsg = `HTTP ${response.status}: ${response.statusText}`
-        setErrorDetails(errorMsg)
-        throw new Error(errorMsg)
-      }
-      
-      const blob = await response.blob()
-      console.log('Blob info:', { size: blob.size, type: blob.type })
-      
-      if (blob.size === 0) {
-        setErrorDetails("File yang diunduh kosong")
-        throw new Error("File yang diunduh kosong")
-      }
+      // Simulasi delay untuk download
+      await new Promise(resolve => setTimeout(resolve, 2000))
       
       // Selesaikan progress ke 100%
       if (progressInterval) clearInterval(progressInterval)
       setDownloadProgress(100)
       
-      // Simulasi delay untuk menampilkan progress 100%
+      // Download langsung dari file lokal
+      const link = document.createElement('a')
+      link.href = '/altura-android.apk'
+      link.download = 'Altura.apk'
+      link.style.display = 'none'
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      
+      setDownloadStatus('completed')
+      toast({
+        title: "Berhasil",
+        description: "APK berhasil diunduh.",
+      })
+      
+      // Reset state setelah 3 detik
       setTimeout(() => {
-        try {
-          const url = window.URL.createObjectURL(blob)
-          const a = document.createElement("a")
-          a.href = url
-          a.download = "Altura.apk"
-          a.style.display = 'none'
-          document.body.appendChild(a)
-          a.click()
-          a.remove()
-          window.URL.revokeObjectURL(url)
-          
-          setDownloadStatus('completed')
-          setRetryCount(0) // Reset retry count on success
-          toast({
-            title: "Berhasil",
-            description: "APK berhasil diunduh.",
-          })
-          
-          // Reset state setelah 3 detik
-          setTimeout(() => {
-            setIsDownloading(false)
-            setDownloadProgress(0)
-            setDownloadStatus('idle')
-          }, 3000)
-        } catch (downloadError) {
-          console.error('Error saat mendownload file:', downloadError)
-          setErrorDetails("Gagal menyimpan file APK")
-          throw new Error('Gagal menyimpan file APK')
-        }
-      }, 500)
+        setIsDownloading(false)
+        setDownloadProgress(0)
+        setDownloadStatus('idle')
+      }, 3000)
       
     } catch (err) {
       if (progressInterval) clearInterval(progressInterval)
-      
-      let errorMessage = "Terjadi kesalahan saat mengunduh APK."
-      
-      if (err instanceof Error) {
-        if (err.message.includes('HTTP')) {
-          errorMessage = `Server error: ${err.message}`
-        } else if (err.message.includes('File yang diunduh kosong')) {
-          errorMessage = "File yang diunduh kosong. Silakan coba lagi."
-        } else if (err.message.includes('Gagal menyimpan file APK')) {
-          errorMessage = "Gagal menyimpan file APK. Periksa pengaturan browser."
-        } else {
-          errorMessage = err.message
-        }
-      }
       
       console.error('Download error:', err)
       setDownloadStatus('error')
       toast({
         title: "Gagal",
-        description: errorMessage,
+        description: "Terjadi kesalahan saat mengunduh APK.",
       })
       
       // Reset state setelah 3 detik
@@ -223,25 +171,6 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
                   {downloadStatus === 'completed' && "File berhasil diunduh!"}
                   {downloadStatus === 'error' && "Gagal mengunduh file"}
                 </div>
-                {retryCount > 1 && (
-                  <div className="text-xs text-orange-600 text-center">
-                    Percobaan ke-{retryCount}
-                  </div>
-                )}
-              </div>
-            )}
-            
-            {downloadStatus === 'error' && errorDetails && (
-              <div className="w-full p-3 bg-red-50 border border-red-200 rounded-md">
-                <div className="text-sm text-red-800 font-medium mb-1">
-                  Detail Error:
-                </div>
-                <div className="text-xs text-red-600">
-                  {errorDetails}
-                </div>
-                <div className="text-xs text-gray-500 mt-2">
-                  Tips: Cek koneksi internet, nonaktifkan popup blocker, atau coba browser lain
-                </div>
               </div>
             )}
             
@@ -253,21 +182,17 @@ export default function BookingForm({ destinationId, price }: BookingFormProps) 
               {getDownloadButtonContent()}
             </Button>
             
-            {downloadStatus === 'error' && (
-              <div className="w-full space-y-2">
-                <Button 
-                  variant="outline"
-                  onClick={() => window.open("/altura-android.apk", "_blank")}
-                  className="w-full"
-                >
-                  <Download className="mr-2 h-4 w-4" />
-                  Download Langsung dari Server Lokal
-                </Button>
-                <p className="text-xs text-gray-500 text-center">
-                  Tombol ini akan membuka download langsung dari file lokal
-                </p>
+            <div className="w-full p-3 bg-blue-50 border border-blue-200 rounded-md">
+              <div className="text-sm text-blue-800 font-medium mb-1">
+                Info Download:
               </div>
-            )}
+              <div className="text-xs text-blue-600">
+                File APK akan diunduh langsung dari server lokal
+              </div>
+              <div className="text-xs text-gray-500 mt-2">
+                Ukuran file: 81.4 MB | Format: APK
+              </div>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
